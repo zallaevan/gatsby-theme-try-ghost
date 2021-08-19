@@ -1,7 +1,7 @@
 # gatsby-theme-try-ghost
 
 [![Released under MIT license.](https://badgen.net/github/license/micromatch/micromatch)](https://github.com/styxlab/gatsby-theme-try-ghost/blob/master/LICENSE)
-[![gatsby-theme-try-ghost npm package version.](https://badgen.net/npm/v/gatsby-theme-try-ghost)](https://www.npmjs.com/package/gatsby-theme-try-ghost)
+[![gatsby-theme-try-ghost npm package version.](https://badgen.net/npm/v/gatsby-theme-try-ghost)](https://www.npmjs.org/package/gatsby-theme-try-ghost)
 [![PRs welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]()
 
 A Gatsby theme plugin for creating blogs from headless [Ghost CMS](https://ghost.org/changelog/jamstack/).
@@ -23,7 +23,7 @@ Play with the [Demo](https://demo.jamify.org/) to get a first impression.
 ## Features
 
 -   Ghost Casper look and feel
--   _Feature & inline_ images with [lazy-loading and blur-up effect](https://using-gatsby-image.gatsbyjs.org/) 🚀 🆕
+-   _Feature & inline_ images with [lazy-loading and blur-up effect](https://using-gatsby-image.gatsbyjs.org/) 🚀🚀 🆕
 -   Infinite Scroll ✨
 -   Featured posts pinned on top 🆕
 -   Sticky navigation headers
@@ -34,6 +34,10 @@ Play with the [Demo](https://demo.jamify.org/) to get a first impression.
 -   Advanced routing 🆕
 -   Composable and extensible
 -   Incremental build enabled 🚀 🆕
+
+## Performance
+
+![Lighthouse Score](https://static.gotsby.org/v1/assets/images/jamify-lighthouse.png)
 
 ## Plugins
 
@@ -52,40 +56,101 @@ Additional features can be integrated by installing Gatsby themes or plugins. Th
 | [`gatsby-plugin-ackee-tracker`](https://github.com/burnsy/gatsby-plugin-ackee-tracker)                                                 | [![version](https://badgen.net/npm/v/gatsby-plugin-ackee-tracker)](https://www.npmjs.com/package/gatsby-plugin-ackee-tracker)       | Site tracking with [Ackee](https://github.com/electerious/Ackee)               |
 | [`gatsby-plugin-google-analytics`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics)             | [![version](https://badgen.net/npm/v/gatsby-plugin-google-analytics)](https://www.npmjs.com/package/gatsby-plugin-google-analytics) | Site tracking with [Google Analytics](https://developers.google.com/analytics) |
 
-## Quick Start
-
-Head over to the [starter repo](https://github.com/styxlab/gatsby-starter-try-ghost) to get up and running quickly! The starter is recommended if you are creating a new site.
-
 ## Installation
 
-This mono repository contains the demo code, the base theme and add-ons. If you are here to install the Gatsby base theme plugin in your existing project, check out the [theme specific README](https://github.com/styxlab/gatsby-theme-try-ghost/tree/master/packages/gatsby-theme-try-ghost/README.md) for further details. All add-ons can be found under the [packages/](https://github.com/styxlab/gatsby-theme-try-ghost/tree/master/packages/) folder.
+> Head over to the [starter repo](https://github.com/styxlab/gatsby-starter-try-ghost) to get up and running quickly!
 
-In case you want to work with this repository (for local development, pull requests, etc.):
+If you want to add this blog theme to an existing site, follow these instructions:
 
-1. Clone or fork this repository:
+1. Install the blog theme
+
+    ```bash
+    yarn add gatsby-theme-try-ghost
+    # or
+    npm install gatsby-theme-try-ghost --save
+    ```
+
+2. Add the following configuration to your `gatsby-config.js` file
+
+    ```js
+    // gatsby-config.js
+    module.exports = {
+        plugins: [
+            {
+                resolve: `gatsby-theme-try-ghost`,
+                options: {
+                    siteConfig: {
+                        siteUrl: `https://your-bog.com`,
+                        postsPerPage: 3,
+                        siteTitleMeta: `Gatsby frontend powered by headless Ghost CMS`,
+                        siteDescriptionMeta: `Turn your Ghost blog into a flaring fast static site with Gatsby`,
+                        shortTitle: `Ghost`,
+                        siteIcon: `favicon.png`,
+                        backgroundColor: `#e9e9e9`,
+                        themeColor: `#15171A`,
+                        gatsbyImages: true,
+                        // Overwrite navigation menu (default: []), label is case sensitive
+                        // overwriteGhostNavigation: [{ label: `Home`, url: `/` }],
+                    },
+                    ghostConfig: {
+                        development: {
+                            apiUrl: "https://your-ghost-cms.com",
+                            contentApiKey: "9fcfdb1e5ea5b472e2e5b92942",
+                        },
+                        production: {
+                            apiUrl: "https://your-ghost-cms.com",
+                            contentApiKey: "9fcfdb1e5ea5b472e2e5b92942",
+                        },
+                    },
+                    //routes: {
+                    //    // Root url for Ghost posts and pages (optional, defaults to `/`)
+                    //    basePath: `/blog`,
+                    //
+                    //    // Collections (optional , default: [])
+                    //    collections: [{
+                    //        path: `speeches`,
+                    //        selector: node => node.primary_tag && node.primary_tag.slug === `speeches`,
+                    //    }],
+                    //},
+                },
+            },
+        ],
+    };
+    ```
+
+3. Update siteConfig
+
+    In the configuration shown above, the most important fields to be changed are `siteUrl`, `siteTitleMeta` and `siteDescriptionMeta`. Update at least those to fit your needs. Also make sure your `favicon.png` can be found in folder `static` of your working directory.
+
+4. Ghost Content API Keys
+
+    Change the `apiUrl` value to the URL of your Ghost CMS site. Next, update the `contentApiKey` value to a key associated with the Ghost CMS site. A key can be provided by creating an integration within Ghost Admin. Navigate to _Integrations_ and click _Add new integration_. Give the integration a name and click create.
+
+5. Advanced Routing
+
+    You can define a `basePath` that is added to all routes, effectively moving all routes one level down. Collections are distinct groups of posts that get an entry point at `collections.path`. Permalinks are best configured in`routes.yaml` of the Ghost CMS.
+
+## Running
+
+Start the development server. You now have a Gatsby site pulling content from headless Ghost.
 
 ```bash
-git clone https://github.com/styxlab/gatsby-theme-try-ghost.git
-cd gatsby-theme-try-ghost
+gatsby develop
 ```
 
-2. Run `yarn` to install dependencies.
+## Ensure headless mode of Ghost CMS
 
-3. Run `yarn develop` to start the example locally.
+For best SEO results it is strongly recommended to disable the default Ghost Handlebars theme front-end by selecting the _Make this site private_ flag within your Ghost admin settings. This enables password protection in front of the Ghost install and sets `<meta name="robots" content="noindex" />` so your Gatsby front-end becomes the source of truth for SEO.
 
 ## Contributions
 
-Special thanks go to the following contributors: [marcoSven](https://github.com/marcoSven), [jem](https://github.com/jempurich), [sawilde](https://github.com/sawilde), [tobimori](https://github.com/tobimori), [Torqu3Wr3nch](https://github.com/Torqu3Wr3nch) and [mf](https://github.com/motherfacker).
+Special thanks go to the following contributors: [jem](https://github.com/jempurich), [tobimori](https://github.com/tobimori) and [Torqu3Wr3nch](https://github.com/Torqu3Wr3nch).
 
 PRs are welcome! Consider contributing to this project if you are missing feature that is also useful for others. Explore [this guide](https://github.com/styxlab/gatsby-theme-try-ghost/tree/master/CONTRIBUTING.md), to get some more ideas.
 
 ## Credits
 
-This project would not be possible without the great [Gatsby](https://www.gatsbyjs.org/), [Ghost](https://ghost.org/), [React](https://reactjs.org/), [GraphQL](https://graphql.org/), [Node](https://nodejs.org) and the [JavaScript](https://developer.mozilla.org/de/docs/Web/JavaScript) eco-system in general.
-
-## Disclaimer
-
-This project is not affiliated with [Gatsby](https://www.gatsbyjs.org/) or [Ghost](https://ghost.org/).
+This project would not be possible without the great [Gatsby](https://www.gatsbyjs.org/), [Ghost](https://ghost.org/), [React](https://reactjs.org/), [GraphQL](https://graphql.org/), [Node](https://nodejs.org) and the [JavaScript](https://developer.mozilla.org/de/docs/Web/JavaScript) eco-system in general. This project started from a fork of [`gatsby-starter-ghost`](https://github.com/TryGhost/gatsby-starter-ghost), but has evolved to a different, independent project.
 
 # Copyright & License
 
