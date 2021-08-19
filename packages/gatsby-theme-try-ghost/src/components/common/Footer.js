@@ -29,7 +29,7 @@ const Footer = ({ data }) => {
                         <Link to={basePath}>{text(`LATEST_POSTS`)}</Link>
                         {site.facebook && <a href={facebookUrl} target="_blank" rel="noopener noreferrer">Facebook</a>}
                         {site.twitter && <a href={twitterUrl} target="_blank" rel="noopener noreferrer">Twitter</a>}
-                        <a href="https://www.jamify.org" target="_blank" rel="noopener noreferrer">Jamify</a>
+                        <a href="https://zallaevan.com" target="_blank" rel="noopener noreferrer">Página del autor</a>
                     </nav>
                 </div>
             </footer>
